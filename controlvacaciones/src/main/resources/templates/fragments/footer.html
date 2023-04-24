@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="head">
+  <meta charset='utf-8'>
+  <title>SISTEMA CONTROL DE VACACIONES</title>
+  <link rel="icon" th:href="@{/img/favicon.ico}"/>
+  <link th:rel="stylesheet" th:href="@{/bootstrap-4.3.1/css/bootstrap.min.css} " />
+  <link rel='stylesheet' type='text/css' media='screen' th:href='@{/css/body.css}'>
+  <link th:rel="stylesheet" th:href="@{/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.min.css} " />
+  <link th:rel="stylesheet" th:href="@{/assets/fontawesome-free-6.4.0-web/css/all.css} " />
+</head>
+
+<body>
+  <!--PIE DE PAGINA-->
+  <footer th:fragment="footer" class="bg-dark text-center text-white fixed-bottom">
+    <div class="container">
+      <p>Freddy Chamorro 2023 &copy; - Control de Vacaciones</p>
+    </div>
+    <script type="text/javascript" th:src="@{/js/body.js}"></script>
+    <script th:src="@{/jquery/js/jquery-3.3.1.slim.min.js}"></script>
+    <script th:src="@{/jquery/popper.min.js}"></script>
+    <script th:src="@{/bootstrap-4.3.1/js/bootstrap.min.js}"></script>
+    <script th:src="@{/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js}"></script>
+  </footer>
+</body>
+
+</html>

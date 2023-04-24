@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+</head>
+
+<body>
+  <div th:insert="~{fragments/header}"></div>
+  <div class="container wrapper">
+    <h2 class="centrado" th:text="${titulo}"></h2>
+
+    <div class="card">
+      <div class="card-header bg-info text-white">Buscar Expedientes</div>
+      <div class="card-body">
+        <form th:action="@{/expediente/buscarExpedienteAnio/}" method="post">
+          <div class="form-group">
+
+              <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                      <span class="input-group-text" id="departamento1">Tipo de Reporte</span>
+                  </div>
+                  <select class="form-control" id="tipoReporte" name="tipoReporte"
+                      th:required="true">
+                      <option value="">Seleccione opción</option>
+                      <option value="1">Funcionario</option>
+                      <option value="2">Departamento</option>
+                      <option value="3">General</option>
+                  </select>
+              </div>
+
+            <div class="row">
+              <div class="col">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="criterio1">Cédula/DNI</span>
+                  </div>
+                  <input type="number" class="form-control" id="criterio" name="criterio"
+                    placeholder="Digite el # de cédula del funcionario" aria-label="criterio"
+                    aria-describedby="criterio1" required />
+                </div>
+              </div>
+              <div class="col">
+                <div class="datepicker date input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">Año</span>
+                  </div>
+
+                  <input type="text" placeholder="Seleccione un año" class="form-control" id="anioExpediente"
+                    name="anioExpediente" required>
+                  <div class="input-group-append">
+                    <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+
+                  </div>
+
+                </div>
+              </div>
+
+
+              <div class="col-2">
+                <button type="submit" class="btn btn-primary">Buscar</button>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                      <span class="input-group-text" id="departamento1">Departamento</span>
+                  </div>
+                  <select class="form-control" id="dropDownList" th:field="*{departamento}"
+                      th:required="true">
+                      <option value="">Seleccione opción</option>
+                      <option th:each="option : ${listaDepartamentos}" th:value="${option.id}"
+                          th:text="${option.descripcion}"></option>
+                  </select>
+              </div>
+          </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="card table-responsive">
+      <div class="card-header bg-success text-white">
+        Resultados
+      </div>
+      <div class="card-body">
+        <table class="table table-hover">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Funcionario</th>
+              <th scope="col">Año</th>
+              <th scope="col">Fecha Inicio</th>
+              <th scope="col">Fecha Fin</th>
+              <th scope="col">Devengado Dias</th>
+              <th scope="col">Devengado Horas</th>
+              <th scope="col">Devengado Minutos</th>
+              <th scope="col">Opciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:if="${listaExpedientes.empty}">
+              <td colspan="7">No existen datos para mostrar</td>
+            </tr>
+            <tr th:each="expediente, indice:${listaExpedientes}">
+              <th scope="row" th:text="${indice.index+1}"></th>
+              <td th:text="${expediente.funcionario.nombres}+' '+${expediente.funcionario.apellidos}"></td>.<td
+                th:text="${expediente.anio}"></td>
+              <td th:text="${#dates.format(expediente.fechaInicioExpediente, 'dd-MMM-yyyy')}"></td>
+              <td th:text="${#dates.format(expediente.fechaFinExpediente, 'dd-MMM-yyyy')}"></td>
+              <td th:text="${expediente.devengadoActualDias}"></td>
+              <td th:text="${expediente.devengadoActualHoras}"></td>
+              <td th:text="${expediente.devengadoActualMinutos}"></td>
+              <td>
+                <a class="btn btn-success btn-sm" th:href="@{/expediente/detalles/} + ${expediente.id}"
+                  th:text="'Detalles'" title="Detalles">
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <footer th:insert="~{fragments/footer }"></footer>
+</body>
+
+</html>

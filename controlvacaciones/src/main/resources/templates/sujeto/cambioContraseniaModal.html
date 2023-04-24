@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head> </head>
+
+  <body>
+      <!-- Modal -->
+      
+
+      <div
+        th:fragment="cambioContraseniaModal">
+        <div
+        class="modal fade"
+        id="cambioContraseniaModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">
+                Cambio de Contraseña
+              </h5>
+              <button
+                type="button"
+                class="close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <!--<form
+                th:action="@{/views/recetas/carrito/save}"
+                th:object="${item}"
+                method="post"
+              >-->
+              <form th:action="@{/funcionario/actualizarcontrasenia/}" method="post">
+
+                <div class="form-group">
+                  <label for="contraseniaAnterior">Contraseña Actual</label>
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="contraseniaAnterior"
+                    name="contraseniaAnterior"
+                    placeholder="contraseniaAnterior"
+                    required
+                    autofocus
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="contraseniaNueva">Nueva Contraseña</label>
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="contraseniaNueva"
+                    name="contraseniaNueva"
+                    placeholder="contraseniaNueva"
+                    required
+                  />
+                </div>
+
+                <div class="form-group">
+                    <label for="contraseniaRepetir">Repetir Nueva Contraseña</label>
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="contraseniaRepetir"
+                      name="contraseniaRepetir"
+                      placeholder="contraseniaRepetir"
+                      required
+                    />
+                  </div>
+
+                <div class="card-footer bg-dark">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                  <input
+                    type="submit"
+                    class="btn btn-primary"
+                    value="Guardar"
+                  />
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

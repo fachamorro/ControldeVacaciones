@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <link rel='stylesheet' type='text/css' media='screen' th:href='@{/css/home.css}'>
+    <link th:rel="stylesheet" th:href="@{/assets/fontawesome-free-6.4.0-web/css/all.css} " />
+</head>
+
+<body>
+    <div th:insert="~{fragments/header}"></div>
+    <div class="container wrapper">
+        <div class="grey-bg container-fluid">
+            <section id="minimal-statistics">
+                <div class="row">
+                    <div class="col-12 mt-3 mb-1">
+                        <h4 class="text-uppercase">Expediente actual</h4>
+                        <span th:text="'Estado del expediente del año ' + ${anio} "></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-3 col-sm-6 col-12">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <div class="media d-flex">
+                                        <div class="align-self-center">
+                                            <i class="fa-regular fa-calendar-days fa-2xl" style="color: #33d17a;"></i>
+                                        </div>
+                                        <div class="media-body text-right">
+                                            <h3 th:text="${expediente.devengadoActualDias}"></h3>
+                                            <span>Días autorizados</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-sm-6 col-12">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <div class="media d-flex">
+                                        <div class="align-self-center">
+                                            <i class="fa-solid fa-clock fa-2xl" style="color: #1c71d8;"></i>
+                                        </div>
+                                        <div class="media-body text-right">
+                                            <h3 th:text="${expediente.devengadoActualHoras}"></h3>
+                                            <span>Horas autorizadas</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-sm-6 col-12">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <div class="media d-flex">
+                                        <div class="align-self-center">
+                                            <i class="fa-regular fa-clock fa-2xl" style="color: #33d17a;"></i>
+                                        </div>
+                                        <div class="media-body text-right">
+                                            <h3 th:text="${expediente.devengadoActualMinutos}"></h3>
+                                            <span>Minutos autorizados</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-sm-6 col-12">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <div class="media d-flex">
+                                        <div class="align-self-center">
+                                            <i class="fa-regular fa-calendar-days fa-2xl" style="color: #e22525;"></i>
+                                        </div>
+                                        <div class="media-body text-right">
+                                            <h3>3 días</h3>
+                                            <span>Saldo a la fecha actual</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <br>
+            <section id="stats-subtitle">
+                <div class="row">
+                    <div class="col-12 mt-3 mb-1">
+                        <h4 class="text-uppercase">Estadísticas de Registros</h4>
+                        <span th:text="'Estadísticas de registros en el sistema del año ' + ${anio} "></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-6 col-md-12">
+                        <div class="card overflow-hidden">
+                            <div class="card-content">
+                                <div class="card-body cleartfix">
+                                    <div class="media align-items-stretch">
+                                        <div class="align-self-center">
+                                            <i class="fa-solid fa-person-walking-dashed-line-arrow-right fa-2xl" style="color: #26a269;"></i>
+                                         </div>
+                                        <div class="media-body">
+                                            <h4>Total Permisos de Salida</h4>
+                                            <span>En el presente año</span>
+                                        </div>
+                                        <div class="align-self-center">
+                                            <h1 th:text="${permisoSalida}"></h1>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-6 col-md-12">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="card-body cleartfix">
+                                    <div class="media align-items-stretch">
+                                        <div class="align-self-center">
+                                            <i class="fa-solid fa-person-walking-luggage fa-2xl" style="color: #1a5fb4;"></i>
+                                        </div>
+                                        <div class="media-body">
+                                            <h4>Total Solicitudes Vacaciones</h4>
+                                            <span>En el presente año</span>
+                                        </div>
+                                        <div class="align-self-center">
+                                            <h1 th:text="${solicitudVacaciones}"></h1>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <footer th:insert="~{fragments/footer }"></footer>
+</body>
+
+</html>

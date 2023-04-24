@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+</head>
+
+<body>
+    <div th:insert="~{fragments/header}"></div>
+    <div class="container wrapper">
+        <h2 class="centrado" th:text="${titulo}"></h2>
+        <div class="card">
+            <div class="card-header bg-dark text-white" th:text="${titulo}"></div>
+            <div class="card-body">
+                <form th:action="@{/funcionario/guardar/}" th:object="${funcionario}" method="post">
+                    <input type="hidden" th:field="*{id}">
+                    <div class="row">
+                        <div class="col-7 card">
+                            <div class="card-header bg-info text-white">
+                                Datos Funcionario
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="cedula1">Cédula</span>
+                                        </div>
+                                        <input type="text" th:field="*{cedula}" class="form-control" id="cedula"
+                                            placeholder="Digite el # de cédula del funcionario" aria-label="cedula"
+                                            aria-describedby="cedula1" minlength="10" maxlength="10"
+                                            pattern="[0-9]+" onchange="autocompletarUsuario();"required  autofocus>
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="nombres1">Nombres</span>
+                                            </div>
+                                            <input type="text" th:field="*{nombres}" class="form-control" id="nombres"
+                                                placeholder="Digite los nombres del funcionario" aria-label="nombres"
+                                                aria-describedby="nombres1" required>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="input-group mb-3 ">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="apellidos1">Apellidos</span>
+                                            </div>
+                                            <input type="text" th:field="*{apellidos}" class="form-control"
+                                                id="apellidos" placeholder="Digite los apellidos del funcionario"
+                                                aria-label="apellidos" aria-describedby="apellidos1" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="email1">Email</span>
+                                            </div>
+                                            <input type="email" th:field="*{email}" class="form-control" id="email"
+                                                placeholder="Digite el email del funcionario" aria-label="email"
+                                                aria-describedby="email1" required>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="telefono1">Teléfono</span>
+                                            </div>
+                                            <input type="text" th:field="*{telefono}" class="form-control"
+                                                id="telefono" placeholder="Digite el # teléfono del funcionario"
+                                                aria-label="telefono" aria-describedby="telefono1" minlength="9"
+                                                maxlength="10" pattern="[0-9]+" required>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="titulo1">Título</span>
+                                        </div>
+                                        <input type="text" th:field="*{titulo}" class="form-control" id="titulo"
+                                            placeholder="Digite el título del funcionario" aria-label="titulo"
+                                            aria-describedby="titulo1" required>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="puesto1">Puesto</span>
+                                                </div>
+                                                <input type="text" th:field="*{puesto}" class="form-control" id="puesto"
+                                                    placeholder="Digite el puesto del funcionario" aria-label="puesto"
+                                                    aria-describedby="puesto1" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon1">Fecha Ingreso</span>
+                                            </div>
+                                            <input type="date" class="form-control" th:field="*{fechaIngreso}"
+                                                placeholder="fechaIngreso" aria-label="fechaIngreso"
+                                                aria-describedby="basic-addon1" th:max="${fechaMaxima}" required>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="departamento1">Departamento</span>
+                                        </div>
+                                        <select class="form-control" id="dropDownList" th:field="*{departamento}"
+                                            th:required="true">
+                                            <option value="">Seleccione opción</option>
+                                            <option th:each="option : ${listaDepartamentos}" th:value="${option.id}"
+                                                th:text="${option.descripcion}"></option>
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon12">Tipo de Funcionario</span>
+                                        </div>
+                                        <select class="form-control" id="tipoFuncionarioSelect"
+                                            name="tipoFuncionarioSelect" th:field="*{tipoFuncionario}">
+                                            <option
+                                                th:each="tipoFuncionarioEnum : ${T(gob.distrito05d03salud.controlvacaciones.dominio.sujeto.TipoFuncionario).values()}"
+                                                th:value="${tipoFuncionarioEnum}" th:text="${tipoFuncionarioEnum}">
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-5 card">
+                            <div class="card-header bg-primary text-white">
+                                Datos del Usuario
+                            </div>
+                            <div class="card-body">
+                                <input type="hidden" th:field="*{usuario.id}">
+                                <div class="form-group">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="user1">Usuario</span>
+                                        </div>
+                                        <input type="text" th:field="*{usuario.username}" th:value="*{cedula}"
+                                            class="form-control" id="username" name="username"
+                                            placeholder="Digite el usuario del funcionario" aria-label="user"
+                                            aria-describedby="user1" minlength="10" maxlength="10" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="contrasenia1">Contraseña</span>
+                                        </div>
+                                        <input type="password" th:field="*{usuario.contrasenia}" class="form-control"
+                                            id="contrasenia" placeholder="Digite la contraseña para el funcionario"
+                                            aria-label="contrasenia" aria-describedby="contrasenia1" minlength="10"
+                                            maxlength="10" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="rolUsuario1">Rol de Usuario</span>
+                                        </div>
+                                        <select class="form-control" id="dropDownList" th:field="*{usuario.rolUsuario}"
+                                            th:required="true">
+                                            <option value="">Seleccione opción</option>
+                                            <option th:each="option : ${listaRolUsuario}" th:value="${option.id}"
+                                                th:text="${option.descripcion}"></option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="option1" name="option1" class="custom-control-input"
+                                            value="true" th:field="*{usuario.estado}">
+                                        <label class="custom-control-label" for="option1">Activo</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="option2" name="option2" class="custom-control-input"
+                                            value="false" th:field="*{usuario.estado}">
+                                        <label class="custom-control-label" for="option2">Inactivo</label>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="card-footer bg-dark">
+                        <input type="submit" class="btn btn-primary" value="Guardar" />
+                        <a class="btn btn-info" th:href="@{/funcionario/}" th:text="'Regresar'" title="Regresar">
+                        </a>
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+    <footer th:insert="~{fragments/footer }"></footer>
+</body>
+<script>
+
+    function autocompletarUsuario() {
+        $('#username').val($('#cedula').val());
+        $('#contrasenia').val($('#cedula').val());
+    }
+    function inputNumber(event) {
+        var aCode = event.which ? event.which : event.keyCode;
+
+        if (aCode > 31 && (aCode < 48 || aCode > 57)) 
+            return false;
+        $('#username').val($('#cedula').val());
+        $('#contrasenia').val($('#cedula').val());
+        return true;
+    }
+
+</script>
+
+</html>

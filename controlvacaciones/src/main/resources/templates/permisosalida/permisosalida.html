@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+</head>
+
+<body>
+    <div th:insert="~{fragments/header}"></div>
+    <div class="container wrapper">
+        <h2 class="centrado" th:text="${titulo}"></h2>
+
+        <a class="btn btn-primary" th:href="@{/permisosalida/nuevo/}" th:text="'Nuevo Registro'"
+            title="Registrar Nuevo Permiso">
+        </a>
+
+        <div class="card">
+            <div class="card-header bg-info text-white">
+                Buscar permisos de salida
+            </div>
+            <div class="card-body">
+                <form>
+
+                    <div class="form-group">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="cedula1">Cédula/DNI</span>
+                            </div>
+                            <input type="number" class="form-control" id="cedula"
+                                placeholder="Digite el # de cédula del funcionario" aria-label="cedula"
+                                aria-describedby="cedula1" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">Fecha Inicio Permisos</span>
+                                    </div>
+                                    <input type="date" class="form-control" placeholder="fechaInicioPermiso"
+                                        aria-label="fechaInicioPermiso" aria-describedby="basic-addon1" required>
+                                </div>
+                            </div>
+
+                            <div class="col">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon2">Fecha Fin Permisos</span>
+                                    </div>
+                                    <input type="date" class="form-control" placeholder="fechaFinPermiso"
+                                        aria-label="fechaFinPermiso" aria-describedby="basic-addon2" required>
+                                </div>
+                            </div>
+
+                            <div class="col-2">
+                                <button type="submit" class="btn btn-primary">Buscar</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="card table-responsive">
+            <div class="card-header bg-success text-white">
+                Resultados
+            </div>
+            <div class="card-body">
+                <table class="table table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Funcionario</th>
+                            <th scope="col">Fecha Inicio</th>
+                            <th scope="col">Fecha Fin</th>
+                            <th scope="col">Dias</th>
+                            <th scope="col">Horas</th>
+                            <th scope="col">Minutos</th>
+                            <th scope="col">Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:if="${listaPermisosSalida.empty}">
+                            <td colspan="8"> No existen datos para mostrar</td>
+                        </tr>
+                        <tr th:each="permisoSalida, indice:${listaPermisosSalida}">
+                            <th scope="row" th:text="${indice.index+1}"></th>
+                            <td
+                                th:text="${permisoSalida.expediente.funcionario.nombres}+' '+${permisoSalida.expediente.funcionario.apellidos}">
+                            </td>
+                            <td th:text="${#dates.format(permisoSalida.fechaInicioPermiso, 'dd-MMM-yyyy')}"></td>
+                            <td th:text="${#dates.format(permisoSalida.fechaFinPermiso, 'dd-MMM-yyyy')}"></td>
+                            <td th:text="${permisoSalida.numeroDias}"></td>
+                            <td th:text="${permisoSalida.numeroHoras}"></td>
+                            <td th:text="${permisoSalida.numeroMinutos}"></td>
+                            <td>
+                                <a class="btn btn-success btn-sm"
+                                    th:href="@{/permisosalida/editar/} + ${permisoSalida.id}" th:text="'Editar'"
+                                    title="Editar">
+                                </a>
+                                <a class="btn btn-danger btn-sm"
+                                    th:href="@{/permisosalida/eliminar/} + ${permisoSalida.id}" th:text="'Eliminar'"
+                                    title="Eliminar" onclick="return confirm('¿Está seguro de eliminar el Registro?')">
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <footer th:insert="~{fragments/footer }"></footer>
+</body>
+
+</html>

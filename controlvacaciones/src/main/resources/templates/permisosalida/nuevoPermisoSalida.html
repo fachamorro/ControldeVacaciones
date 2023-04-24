@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+</head>
+
+<body>
+    <div th:insert="~{fragments/header}"></div>
+
+    <div class="container wrapper">
+        <h2 class="centrado" th:text="${titulo}"></h2>
+        <div class="card">
+            <div class="card-header bg-dark text-white" th:text="${titulo}"></div>
+            <div class="card-body">
+
+                <form th:action="@{/permisosalida/buscarCriterio/}" method="post">
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="criterio1">Criterio</span>
+                                    </div>
+                                    <input type="text" class="form-control" id="criterio" name="criterio"
+                                        placeholder="Criterio de búsqueda del funcionario" aria-label="criterio"
+                                        aria-describedby="criterio1" required  autofocus>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <input type="submit" class="btn btn-success" value="Buscar" />
+                        </div>
+
+                    </div>
+
+
+                </form>
+
+                <form th:action="@{/permisosalida/guardar/}" th:object="${permisoSalida}" method="post">
+                    <input type="hidden" th:field="*{id}" />
+                    <input type="hidden" th:field="*{expediente}">
+                    <input type="hidden" th:field="*{expediente.funcionario}">
+                    <div class="form-group">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="cedula1">Cédula del Funcionario</span>
+                            </div>
+                            <input type="number" th:field="*{expediente.funcionario.cedula}" class="form-control"
+                                id="cedula" placeholder="Digite el # de cédula del funcionario" aria-label="cedula"
+                                aria-describedby="cedula1" required readonly>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+
+                            <div class="col">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="funcionario1">Funcionario</span>
+                                    </div>
+                                    <input type="text" th:field="*{expediente.funcionario.apellidos}"
+                                        class="form-control" id="funcionario1" placeholder="Apellidos"
+                                        aria-label="funcionario1" aria-describedby="funcionario1" readonly
+                                        th:required="required">
+                                    <input type="text" th:field="*{expediente.funcionario.nombres}" class="form-control"
+                                        id="funcionario1" placeholder="Nombres" aria-label="funcionario1"
+                                        aria-describedby="funcionario1" readonly th:required="required">
+                                </div>
+                            </div>
+
+                            <div class="col">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="dpto1">Departamento</span>
+                                    </div>
+                                    <input type="text" th:field="*{expediente.funcionario.departamento.descripcion}"
+                                        class="form-control" id="dpto1" placeholder="Complete el departamento"
+                                        aria-label="dpto1" aria-describedby="dpto1" readonly th:required="required">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon12">Motivo de Permiso</span>
+                                    </div>
+                                    <select class="form-control" id="motivoPermisoSelect" name="motivoPermisoSelect"
+                                        th:field="*{motivoPermiso}">
+                                        <option
+                                            th:each="motivoPermisoEnum : ${T(gob.distrito05d03salud.controlvacaciones.dominio.controlvacaciones.MotivoPermiso).values()}"
+                                            th:value="${motivoPermisoEnum}" th:text="${motivoPermisoEnum}"></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon12">Tipo de Permiso</span>
+                                    </div>
+                                    <select class="form-control" id="tipoPermisoSelect" name="tipoPermisoSelect"
+                                        th:field="*{tipoPermiso}">
+                                        <option
+                                            th:each="tipoPermisoEnum : ${T(gob.distrito05d03salud.controlvacaciones.dominio.controlvacaciones.TipoPermiso).values()}"
+                                            th:value="${tipoPermisoEnum}" th:text="${tipoPermisoEnum}"></option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col">
+                               
+
+                                <div class="form-group">
+                                    <div class="input-group-prepend custom-control-inline">
+                                        <span class="input-group-text" id="cargoVacaciones1">¿Cargar a
+                                            vacaciones?</span>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="option1" name="option1" class="custom-control-input" value="true"
+                                            th:field="*{cargoVacaciones}">
+                                        <label class="custom-control-label" for="option1">SI</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="option2" name="option2" class="custom-control-input" value="false"
+                                            th:field="*{cargoVacaciones}">
+                                        <label class="custom-control-label" for="option2">NO</label>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+
+                            <div class="col">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">Fecha Inicio Permiso</span>
+                                    </div>
+                                    <input type="date" class="form-control" placeholder="fechaInicioPermiso"
+                                        th:field="*{fechaInicioPermiso}" th:min="${fechaMinima}" th:max="${fechaMaxima}"
+                                        aria-label="fechaInicioPermiso" aria-describedby="basic-addon1" required>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon2">Fecha Fin Permiso</span>
+                                    </div>
+                                    <input type="date" class="form-control" placeholder="fechaFinPermiso"
+                                        th:field="*{fechaFinPermiso}" th:min="${fechaMinima}" th:max="${fechaMaxima}"
+                                        aria-label="fechaFinPermiso" aria-describedby="basic-addon2" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="numeroDias1">Días</span>
+                                    </div>
+                                    <input type="number" class="form-control" id="numeroDias" th:field="*{numeroDias}"
+                                        min="0" max="3" placeholder="# de días del permiso" aria-label="numeroDias"
+                                        aria-describedby="numeroDias1" required>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="numeroHoras1">Horas</span>
+                                    </div>
+                                    <input type="number" class="form-control" id="numeroHoras" th:field="*{numeroHoras}"
+                                        min="0" max="7" placeholder="# de horas del permiso" aria-label="numeroHoras"
+                                        aria-describedby="numeroHoras1" required>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="numeroMinutos1">Minutos</span>
+                                    </div>
+                                    <input type="number" class="form-control" id="numeroMinutos"
+                                        th:field="*{numeroMinutos}" min="0" max="59"
+                                        placeholder="# de minutos del permiso" aria-label="numeroMinutos"
+                                        aria-describedby="numeroMinutos1" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="observacion1">Observaciones</span>
+                            </div>
+                            <textarea class="form-control" id="observacion" th:field="*{observacion}"
+                                placeholder="Digite las observaciones del permiso" aria-label="observacion"
+                                aria-describedby="observacion1"></textarea>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-dark">
+                        <input type="submit" class="btn btn-primary" value="Guardar" />
+                        <a class="btn btn-info" th:href="@{/permisosalida/}" th:text="'Regresar'" title="Regresar">
+                        </a>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+    <footer th:insert="~{fragments/footer }"></footer>
+</body>
+<script>
+    $("#fechaFinPermiso").change(function () {
+        var date = $(this).val();
+        date1 = new Date($("#fechaInicioPermiso").val());
+        date2 = new Date($(this).val());
+        time_difference = date2.getTime() - date1.getTime();
+        days_difference = time_difference / (1000 * 60 * 60 * 24);
+
+        $("#numeroDias").val(days_difference+1);
+    });
+    $("#fechaInicioPermiso").change(function () {
+        var date = $(this).val();
+        date1 = new Date($(this).val());
+        date2 = new Date($("#fechaFinPermiso").val());
+        time_difference = date2.getTime() - date1.getTime();
+        days_difference = time_difference / (1000 * 60 * 60 * 24);
+
+        $("#numeroDias").val(days_difference+1);
+    });
+    /*window.onload = () => {
+        if($("#id").val()){
+            $('#option1').attr("disabled",true);
+            $('#option2').attr("disabled",true);
+        }
+    } ; */  
+</script>
+
+</html>

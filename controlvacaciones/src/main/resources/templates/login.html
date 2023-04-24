@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" th:href="@{/img/favicon.ico}" />
+  <title>SISTEMA CONTROL DE VACACIONES</title>
+  <link th:rel="stylesheet" th:href="@{/bootstrap-4.3.1/css/bootstrap.min.css} " />
+
+  <link rel="stylesheet" type="text/css" media="screen" th:href="@{/css/login.css}" />
+</head>
+
+<body>
+  <!-- FORMULARIO-->
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-6 col-md-7 intro-section">
+        <div class="brand-wrapper">
+          <img th:src="@{/img/logo.png}" id="icon" alt="User Icon" />
+        </div>
+        <div class="intro-content-wrapper">
+          <h1 class="intro-title">¡Bienvenido!</h1>
+          <p class="intro-text">
+            Aplicación web para el registro de permisos y consulta de
+            vacaciones disponibles de los funcionarios de la Dirección
+            Distrital 05D03 Pangua - La Maná - Salud
+          </p>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-5 form-section">
+        <div class="login-wrapper">
+          <!-- MENSAJES -->     
+          <div th:if="${param.error}">
+            <div class="alert alert-warning alert-dismissible fade show" id="warning-alert" role="alert"
+            >
+            <label>Usuario o contraseña inválida!</label>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div></div>
+        <div th:if="${param.logout}">
+          <div class="alert alert-info alert-dismissible fade show" id="info-alert" role="alert">
+            <label>Ha cerrado su sesión!</label>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        </div>
+            
+          <!-- FIN MENSAJES-->
+          <h2 class="login-title">Inicio de Sesión</h2>
+          <form th:action="@{/login/}" method="post">
+            <div class="form-group">
+              <label for="username" class="sr-only">Usuario</label>
+              <input type="text" name="username" id="username" class="form-control" placeholder="Digite su usuario"
+                aria-label="username" pattern="[A-Za-z0-9]+" required autofocus/>
+            </div>
+            <div class="form-group mb-3">
+              <label for="password" class="sr-only">Contraseña</label>
+              <input type="password" name="password" id="password" class="form-control"
+                placeholder="Digite su contraseña de usuario" required />
+            </div>
+            <div class="d-flex justify-content-between align-items-center mb-5">
+              <input type="submit" class="btn login-btn" value="Iniciar" />
+              <a data-toggle="modal" data-target="#exampleModal" class="forgot-password-link">Olvidó su contraseña?</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">¿Olvidó su contraseña?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>
+            Solicite un reseteo de contraseña desde su correo institucional a
+            soporte@05d03.mspz3.gob.ec
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Salir
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<script th:src="@{/jquery/js/jquery-3.3.1.slim.min.js}"></script>
+<script th:src="@{/bootstrap-4.3.1/js/bootstrap.min.js}"></script>
+
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head> </head>
+
+<body>
+  <div th:insert="~{fragments/header}"></div>
+  <div class="container wrapper">
+    <h2 class="centrado" th:text="${titulo}"></h2>
+    <div class="card">
+      <div class="card-header bg-primary text-white">
+        <h5 class="centrado" th:text="' AÑO: ' + ${expediente.anio}"></h5>
+      </div>
+      <div class="card-body">
+        <div class="card">
+          <div class="card-header bg-info text-white">Resumen del Expediente</div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col">
+                <h5>Datos Personales</h5>
+                <strong>Cedula: </strong><span th:text="${expediente.funcionario.cedula}"></span><br>
+                <strong>Nombres: </strong><span th:text="${expediente.funcionario.nombres}"></span><br>
+              </div>
+              <div class="col-3">
+                <h5>Datos del expediente</h5>
+                <strong>Año: </strong><span th:text="${expediente.anio}"></span><br>
+                <strong>Días devengados: </strong><span th:text="${expediente.devengadoActualDias}"></span><br>
+                <strong>Horas devengadas: </strong><span th:text="${expediente.devengadoActualHoras}"></span><br>
+                <strong>Minutos devengados: </strong><span th:text="${expediente.devengadoActualMinutos}"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <!--RESULTADOS PERMISOS SALIDA-->
+            <div class="card table-responsive">
+              <div class="card-header bg-success text-white">Resultados Permisos Salida</div>
+              <div class="card-body">
+                <table class="table table-hover">
+                  <thead class="thead-dark">
+                    <tr>
+                      <th scope="col">ID</th>
+                      <th scope="col">Fecha Inicio</th>
+                      <th scope="col">Fecha Fin</th>
+                      <th scope="col">Devengado Dias</th>
+                      <th scope="col">Devengado Horas</th>
+                      <th scope="col">Devengado Minutos</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr th:if="${listaPermisosSalida.empty}">
+                      <td colspan="8"> No existen datos para mostrar</td>
+                    </tr>
+                    <tr th:each="permisoSalida, indice:${listaPermisosSalida}">
+                      <th scope="row" th:text="${indice.index+1}"></th>
+                      <td th:text="${#dates.format(permisoSalida.fechaInicioPermiso, 'dd-MMM-yyyy')}"></td>
+                      <td th:text="${#dates.format(permisoSalida.fechaFinPermiso, 'dd-MMM-yyyy')}"></td>
+                      <td th:text="${permisoSalida.numeroDias}"></td>
+                      <td th:text="${permisoSalida.numeroHoras}"></td>
+                      <td th:text="${permisoSalida.numeroMinutos}"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <!--RESULTADOS SOLICITUDES VACACIONES-->
+            <div class="card table-responsive">
+              <div class="card-header bg-success text-white">Resultados Solicitudes de Vacaciones</div>
+              <div class="card-body">
+                <table class="table table-hover">
+                  <thead class="thead-dark">
+                    <tr>
+                      <th scope="col">ID</th>
+                      <th scope="col">Fecha Inicio</th>
+                      <th scope="col">Fecha Fin</th>
+                      <th scope="col">Dias Solicitados</th>
+                      <th scope="col">Fecha Registro</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr th:if="${listaSolicitudVacaciones.empty}">
+                      <td colspan="7"> No existen datos para mostrar</td>
+                    </tr>
+                    <tr th:each="solicitudVacaciones, indice:${listaSolicitudVacaciones}">
+                      <th scope="row" th:text="${indice.index+1}"></th>
+                      <td th:text="${#dates.format(solicitudVacaciones.fechaInicioVacaciones, 'dd-MMM-yyyy')}"></td>
+                      <td th:text="${#dates.format(solicitudVacaciones.fechaFinVacaciones, 'dd-MMM-yyyy')}"></td>
+                      <td th:text="${solicitudVacaciones.numeroDias}"></td>
+                      <td th:text="${solicitudVacaciones.fechaRegistro}"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+
+      <div class="card-footer bg-dark">
+        <a class="btn btn-info" th:href="@{/expediente/expedientepersonal/}" th:text="'Regresar'" title="Regresar">
+        </a>
+      </div>
+    </div>
+  </div>
+  <footer th:insert="~{fragments/footer}"></footer>
+</body>
+
+</html>

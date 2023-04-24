@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head> </head>
+
+<body>
+  <div th:insert="~{fragments/header}"></div>
+  <div class="container wrapper">
+    <h2 class="centrado" th:text="${titulo}"></h2>
+    <div class="card">
+      <div class="card-header bg-dark text-white" th:text="${titulo}"></div>
+      <div class="card-body">
+        <form th:action="@{/solicitudvacaciones/buscarCriterio/}" method="post">
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="criterio1">Criterio</span>
+                  </div>
+                  <input type="text" class="form-control" id="criterio" name="criterio"
+                    placeholder="Criterio de búsqueda del funcionario" aria-label="criterio"
+                    aria-describedby="criterio1" required  autofocus/>
+                </div>
+              </div>
+            </div>
+            <div class="col-2">
+              <input type="submit" class="btn btn-success" value="Buscar" />
+            </div>
+          </div>
+        </form>
+
+        <form th:action="@{/solicitudvacaciones/guardar/}" th:object="${solicitudVacaciones}" method="post">
+          <input type="hidden" th:field="*{id}" />
+          <input type="hidden" th:field="*{expediente}" />
+          <input type="hidden" th:field="*{expediente.funcionario}" />
+          <div class="form-group">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="cedula1">Cédula del Funcionario</span>
+              </div>
+              <input type="number" th:field="*{expediente.funcionario.cedula}" class="form-control" id="cedula"
+                placeholder="Digite el # de cédula del funcionario" aria-label="cedula" aria-describedby="cedula1"
+                required readonly />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="row">
+              <div class="col">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="funcionario1">Funcionario</span>
+                  </div>
+                  <input type="text" th:field="*{expediente.funcionario.apellidos}" class="form-control"
+                    id="funcionario1" placeholder="Apellidos" aria-label="funcionario1" aria-describedby="funcionario1"
+                    readonly th:required="required" />
+                  <input type="text" th:field="*{expediente.funcionario.nombres}" class="form-control" id="funcionario1"
+                    placeholder="Nombres" aria-label="funcionario1" aria-describedby="funcionario1" readonly
+                    th:required="required" />
+                </div>
+              </div>
+
+              <div class="col">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="dpto1">Departamento</span>
+                  </div>
+                  <input type="text" th:field="*{expediente.funcionario.departamento.descripcion}" class="form-control"
+                    id="dpto1" placeholder="Complete el departamento" aria-label="dpto1" aria-describedby="dpto1"
+                    readonly th:required="required" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="puesto1">Cargo/Puesto</span>
+              </div>
+              <input type="text" th:field="*{expediente.funcionario.puesto}" class="form-control" id="puesto"
+                placeholder="Puesto del funcionario" aria-label="puesto" aria-describedby="puesto1" required readonly />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="row">
+              <div class="col">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon12">Tipo de Vacaciones</span>
+                  </div>
+                  <select class="form-control" id="tipoVacacionesSelect" name="tipoVacacionesSelect"
+                    th:field="*{tipoVacaciones}">
+                    <option
+                      th:each="tipoVacacionesEnum : ${T(gob.distrito05d03salud.controlvacaciones.dominio.controlvacaciones.TipoVacaciones).values()}"
+                      th:value="${tipoVacacionesEnum}" th:text="${tipoVacacionesEnum}"></option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="row">
+              <div class="col">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">Fecha Inicio Vacaciones</span>
+                  </div>
+                  <input type="date" class="form-control" placeholder="fechaInicioVacaciones"
+                    th:field="*{fechaInicioVacaciones}" name="fechaInicioVacaciones" id="fechaInicioVacaciones"
+                    th:min="${fechaMinima}" th:max="${fechaMaxima}" aria-label="fechaInicioVacaciones"
+                    aria-describedby="basic-addon1" required />
+                </div>
+              </div>
+              <div class="col">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon2">Fecha Fin Vacaciones</span>
+                  </div>
+                  <input type="date" class="form-control" placeholder="fechaFinVacaciones"
+                    th:field="*{fechaFinVacaciones}" name="fechaFinVacaciones" id="fechaFinVacaciones"
+                    th:min="${fechaMinima}" th:max="${fechaMaxima}" aria-label="fechaFinVacaciones"
+                    aria-describedby="basic-addon2" required />
+                </div>
+              </div>
+
+              <div class="col">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="numeroDias1">Días</span>
+                  </div>
+                  <input type="number" class="form-control" name="numeroDias" id="numeroDias" th:field="*{numeroDias}"
+                    min="3" max="90" placeholder="# de días del permiso" aria-label="numeroDias"
+                    aria-describedby="numeroDias1" required />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="observacion1">Observaciones</span>
+              </div>
+              <textarea class="form-control" id="observacion" th:field="*{observacion}"
+                placeholder="Digite las observaciones de la Solicitud de Vacaciones" aria-label="observacion"
+                aria-describedby="observacion1"></textarea>
+            </div>
+          </div>
+
+          <div class="card-footer bg-dark">
+            <input type="submit" class="btn btn-primary" value="Guardar" />
+            <a class="btn btn-info" th:href="@{/solicitudvacaciones/}" th:text="'Regresar'" title="Regresar">
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <footer th:insert="~{fragments/footer }"></footer>
+</body>
+<script>
+  $("#fechaFinVacaciones").change(function () {
+    var date = $(this).val();
+    date1 = new Date($("#fechaInicioVacaciones").val());
+    date2 = new Date($(this).val());
+    time_difference = date2.getTime() - date1.getTime();
+    days_difference = time_difference / (1000 * 60 * 60 * 24);
+
+    $("#numeroDias").val(days_difference);
+  });
+  $("#fechaInicioVacaciones").change(function () {
+    var date = $(this).val();
+    date1 = new Date($(this).val());
+    date2 = new Date($("#fechaFinVacaciones").val());
+    time_difference = date2.getTime() - date1.getTime();
+    days_difference = time_difference / (1000 * 60 * 60 * 24);
+
+    $("#numeroDias").val(days_difference);
+  });
+</script>
+
+</html>

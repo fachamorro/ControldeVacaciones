@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+</head>
+
+<body>
+    <div th:insert="~{fragments/header}"></div>
+    <div class="container wrapper">
+        <h2 class="centrado" th:text="${titulo}"></h2>
+
+        <a class="btn btn-primary" th:href="@{/rolusuario/nuevo/}" th:text="'Nuevo Registro'"
+            title="Registrar Nuevo Rol de usuario">
+        </a>
+
+        <div class="card">
+            <div class="card-header bg-info text-white">
+                Buscar Rol de usuario
+            </div>
+            <div class="card-body">
+                <form>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="departamento1">Rolusuario</span>
+                                    </div>
+                                    <input type="number" class="form-control" id="rolusuario"
+                                        placeholder="Digite la descripción del rol usuario" aria-label="rolusuario"
+                                        aria-describedby="departamento1" required>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <button type="submit" class="btn btn-primary">Buscar</button>
+                            </div>
+                        </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="card table-responsive">
+            <div class="card-header bg-success text-white">
+                Resultados
+            </div>
+            <div class="card-body">
+                <table class="table table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Descripción</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col">Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:if="${listaRolesusuario.empty}">
+                            <td colspan="4"> No existen datos para mostrar</td>
+                        </tr>
+                        <tr th:each="rolusuario, indice :${listaRolesusuario}">
+                            <th scope="row" th:text="${indice.index + 1}"></th>
+                            <td th:text="${rolusuario.descripcion}"></td>
+                            <td>
+                                <span th:if="${rolusuario.estado == true}" class="badge badge-primary" >Activo</span>
+                                <span th:unless="${rolusuario.estado == true}" class="badge badge-warning">Inactivo</span>
+                            </td>
+                            <td>
+                                <a class="btn btn-success btn-sm" th:href="@{/rolusuario/editar/} + ${rolusuario.id}"
+                                    th:text="'Editar'" title="Editar">
+                                </a>
+                                <a class="btn btn-danger btn-sm" th:href="@{/rolusuario/eliminar/} + ${rolusuario.id}"
+                                    th:text="'Eliminar'" title="Eliminar"
+                                    onclick="return confirm('¿Está seguro de eliminar el Registro?')">
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <footer th:insert="~{fragments/footer }"></footer>
+</body>
+
+</html>

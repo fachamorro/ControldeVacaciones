@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+</head>
+
+<body>
+    <div th:insert="~{fragments/header}"></div>
+
+    <div class="container wrapper">
+        <h2 class="centrado" th:text="${titulo}"></h2>
+        <div class="card">
+            <div class="card-header bg-dark text-white" th:text="${titulo}"></div>
+            <div class="card-body">
+
+                <form th:action="@{/rolusuario/guardar/}" th:object="${rolusuario}" method="post">
+
+                    <input type="hidden" th:field="*{id}">
+                    <div class="form-group">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="descripcion1">Descripción</span>
+                            </div>
+                            <input type="text" th:field="*{descripcion}" class="form-control" id="descripcion"
+                                placeholder="Digite el detalle/nombre/descripción del rolusuario"
+                                aria-label="descripcion" aria-describedby="descripcion1" required  autofocus>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" id="option1" name="option1" class="custom-control-input" value="true"
+                                th:field="*{estado}">
+                            <label class="custom-control-label" for="option1">Activo</label>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" id="option2" name="option2" class="custom-control-input" value="false"
+                                th:field="*{estado}">
+                            <label class="custom-control-label" for="option2">Inactivo</label>
+                        </div>
+                    </div>
+
+
+
+                    <div class="card-footer bg-dark">
+                        <input type="submit" class="btn btn-primary" value="Guardar" />
+                        <a class="btn btn-info" th:href="@{/rolusuario/}" th:text="'Regresar'" title="Regresar">
+                        </a>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+    <footer th:insert="~{fragments/footer }"></footer>
+</body>
+
+</html>
